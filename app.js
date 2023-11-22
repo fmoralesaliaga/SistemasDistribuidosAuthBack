@@ -13,22 +13,32 @@ users = [
 ];
 
 app.get('/user/:id', async (req, res) => {
-    const id = parseInt(req.params.id);
-    const user = users.find((u) => u.id === id);
+  const id = parseInt(req.params.id);
+  const user = users.find((u) => u.id === id);
 
-    if (user) {
+  if (user) {
     res.json(user);
-    } else {
+  } else {
     res.status(404).json({ message: 'Usuario no encontrado' });
-    }
+  }
 });
 
 app.post('/user/', async (req, res) => {
-    try {
-        const { name, username, password } = req.body;
-        const hashedPassword = await bcrypt.hash(password, 10);
+  try {
+    console.log(users.length);
+    const id = users.length;
+    const { name, username, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    users.push({ id: id, name: name, username: username, password: hashedPassword });
+    if (users.length == id + 1) {
+      res.status(200).json({ message: 'Usuario registrado exitosamente' });
+    } else {
+      res.status(404).json({ message: 'Usuario no registrado' });
     }
-})
+  } catch (e) {
+    res.status(404).json({ message: 'Usuario no registrado' });
+  }
+});
 
 const PORT = 3000;
 app.listen(PORT, () => {
