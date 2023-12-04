@@ -17,7 +17,7 @@ app.use(express.json()); // Middleware para parsear JSON en el cuerpo de las sol
 app.use('/api', userRoutes);
 
 // Definir el puerto y poner el servidor a escuchar
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
